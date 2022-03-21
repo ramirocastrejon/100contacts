@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
@@ -75,26 +76,34 @@ class MainActivity : AppCompatActivity() {
         val findButton = findViewById<Button>(R.id.find)
 
         findButton.setOnClickListener {
+
             val db = DBHelper(this, null)
             val id = idText.text.toString()
 
-            //val cursor = db.getName()
-            //cursor!!.moveToFirst()
-            val cursor = db.getContact(id)
-            cursor!!.moveToFirst()
+            if(id.toInt() in 1..99) {
+                Log.i("finding id", "Finding ID")
+                //val cursor = db.getName()
+                //cursor!!.moveToFirst()
+                val cursor = db.getContact(id)
+                cursor!!.moveToFirst()
 
-            if (cursor != null) {
-                firstName!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.FIRST_NAME_COl))
-                lastName!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.LAST_NAME_COL))
-                company!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.COMPANY_NAME))
-                county!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.COUNTY_COL))
-                address!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.ADDRESS))
-                state!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.STATE))
-                city!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.STATE))
-                zip!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.ZIP))
-                phone1!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.PHONE1))
-                phone!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.PHONE))
-                email!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.EMAIL))
+                if (cursor != null) {
+                    firstName!!.text =
+                        cursor.getString(cursor.getColumnIndex(DBHelper.FIRST_NAME_COl))
+                    lastName!!.text =
+                        cursor.getString(cursor.getColumnIndex(DBHelper.LAST_NAME_COL))
+                    company!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.COMPANY_NAME))
+                    county!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.COUNTY_COL))
+                    address!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.ADDRESS))
+                    state!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.STATE))
+                    city!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.STATE))
+                    zip!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.ZIP))
+                    phone1!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.PHONE1))
+                    phone!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.PHONE))
+                    email!!.text = cursor.getString(cursor.getColumnIndex(DBHelper.EMAIL))
+                }
+            } else {
+                Toast.makeText(this, "Please input valid id (1-99)", Toast.LENGTH_LONG).show()
             }
         }
     }
